@@ -21,5 +21,32 @@
     ],
     "slug": "reliance-ns",
     "horizon_subdir": "long"
+  },
+  {
+    "ticker": "RELIANCE.NS",
+    "company_name": "Reliance Industries Limited",
+    "one_line_summary": "A fundamentally sound mega-cap with a real, dated Jio IPO catalyst but a currently non-confirming, mixed/no-clean-trend chart and incomplete computed technical data, making a 25%+ 12-month move plausible only if the IPO executes on schedule and re-rates the holding-company discount.",
+    "date": "2026-09-16",
+    "horizon": "short",
+    "index_row": [
+      [
+        "Shariah: LIKELY_PASS",
+        "pass"
+      ],
+      [
+        "Technicals not aligned",
+        "fail"
+      ],
+      [
+        "Pattern unclear",
+        "uncertain"
+      ],
+      [
+        "Target uncertain",
+        "uncertain"
+      ]
+    ],
+    "slug": "reliance-ns",
+    "horizon_subdir": "short"
   }
 ]
