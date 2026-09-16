@@ -1,149 +1,322 @@
+/* ============================================================
+   Stock Analysis Agents — terminal/dashboard design system
+   Two accents (teal=data/interactive, gold=premium highlight),
+   kept separate from functional status colors (pass/fail/uncertain).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 :root {
-  --ink: #12181f;
-  --paper: #f7f5f0;
-  --paper-dim: #ece8df;
-  --rule: #d8d2c4;
-  --accent-pass: #2f6b4f;
-  --accent-fail: #a13d3d;
-  --accent-uncertain: #8a6d1f;
-  --text-dim: #5b5648;
+  --bg: #0a0f16;
+  --panel: #111826;
+  --panel-raised: #151d2c;
+  --rule: #223047;
+  --rule-soft: #1a2434;
+
+  --text: #e8ecf1;
+  --text-dim: #7e8ba0;
+  --text-faint: #4d5a70;
+
+  --teal: #2dd4bf;
+  --teal-dim: #14a99730;
+  --gold: #d4a24c;
+  --gold-dim: #d4a24c30;
+
+  --pass: #34d399;
+  --pass-bg: #34d39918;
+  --fail: #f87171;
+  --fail-bg: #f8717118;
+  --uncertain: #fbbf24;
+  --uncertain-bg: #fbbf2418;
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
 }
 
 * { box-sizing: border-box; }
 
+html { scroll-behavior: smooth; }
+
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  line-height: 1.55;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, #14294020, transparent),
+    radial-gradient(ellipse 700px 400px at 100% 0%, #3d2e1420, transparent);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
 }
 
+::selection { background: var(--teal-dim); color: var(--text); }
+
+.mono, .price, .ticker-tag, .index-table td:nth-child(2),
+.report-date, table.report-table td, table.report-table th {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Header / hero ---------- */
+
 .site-header {
-  padding: 2.5rem 1.5rem 1.5rem;
-  max-width: 880px;
+  padding: 3rem 1.75rem 2rem;
+  max-width: 980px;
   margin: 0 auto;
-  border-bottom: 1px solid var(--rule);
 }
 
 .site-header h1 {
-  font-size: 1.7rem;
-  font-weight: 600;
-  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
+  margin: 0 0 0.6rem;
+  color: var(--text);
 }
 
 .subhead {
+  font-family: var(--font-body);
   color: var(--text-dim);
-  font-size: 0.98rem;
-  max-width: 62ch;
+  font-size: 1.02rem;
+  max-width: 66ch;
   margin: 0;
 }
 
-main {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 1.5rem;
+/* Mission-control stats strip: the one bold moment on the index */
+.stats-strip {
+  display: flex;
+  gap: 0;
+  max-width: 980px;
+  margin: 0 auto 2rem;
+  padding: 0 1.75rem;
+  flex-wrap: wrap;
 }
 
-.back-link {
-  display: inline-block;
-  margin: 1.2rem 0 0 1.5rem;
+.stat-block {
+  flex: 1;
+  min-width: 140px;
+  padding: 1.1rem 1.4rem;
+  border-left: 1px solid var(--rule);
+}
+.stat-block:first-child { border-left: none; padding-left: 0; }
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 2.1rem;
+  font-weight: 500;
+  color: var(--teal);
+  text-shadow: 0 0 24px var(--teal-dim);
+  line-height: 1;
+  animation: stat-fade-in 0.6s ease-out;
+}
+
+.stat-value.gold { color: var(--gold); text-shadow: 0 0 24px var(--gold-dim); }
+
+@keyframes stat-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
   color: var(--text-dim);
-  text-decoration: none;
-  font-family: "SF Mono", "Menlo", monospace;
-  font-size: 0.85rem;
+  margin-top: 0.35rem;
 }
-.back-link:hover { color: var(--ink); }
 
-.index-table, .report-table {
+/* ---------- Index table (terminal style, not cards) ---------- */
+
+main { max-width: 980px; margin: 0 auto; padding: 0 1.75rem 3rem; }
+
+.index-table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
 
-.index-table th, .index-table td,
-.report-table th, .report-table td {
+.index-table th {
   text-align: left;
-  padding: 0.65rem 0.8rem;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-faint);
   border-bottom: 1px solid var(--rule);
 }
 
-.index-table th, .report-table th {
-  font-family: "SF Mono", "Menlo", monospace;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  font-weight: 600;
-  text-transform: lowercase;
+.index-table td {
+  padding: 0.85rem 0.9rem;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--font-body);
 }
+
+.index-table tr:hover td { background: var(--panel); box-shadow: inset 3px 0 0 var(--teal); }
 
 .index-table a {
-  color: var(--ink);
+  color: var(--text);
+  font-family: var(--font-display);
   font-weight: 600;
   text-decoration: none;
-  border-bottom: 1px solid var(--rule);
 }
-.index-table a:hover { border-bottom-color: var(--ink); }
+.index-table a:hover { color: var(--teal); }
+
+/* ---------- Status badges: soft-glow pills, not solid blocks ---------- */
 
 .badge {
-  display: inline-block;
-  font-family: "SF Mono", "Menlo", monospace;
-  font-size: 0.72rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 2px;
-  color: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  white-space: nowrap;
 }
-.badge-pass { background: var(--accent-pass); }
-.badge-fail { background: var(--accent-fail); }
-.badge-uncertain { background: var(--accent-uncertain); }
+.badge::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.badge-pass { background: var(--pass-bg); color: var(--pass); border-color: var(--pass-bg); }
+.badge-pass::before { background: var(--pass); box-shadow: 0 0 6px var(--pass); }
+.badge-fail { background: var(--fail-bg); color: var(--fail); border-color: var(--fail-bg); }
+.badge-fail::before { background: var(--fail); box-shadow: 0 0 6px var(--fail); }
+.badge-uncertain { background: var(--uncertain-bg); color: var(--uncertain); border-color: var(--uncertain-bg); }
+.badge-uncertain::before { background: var(--uncertain); box-shadow: 0 0 6px var(--uncertain); }
+
+/* Horizon tag on the combined index — distinct from status badges */
+.horizon-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  color: var(--text-dim);
+}
+.horizon-tag.long { border-color: var(--teal-dim); color: var(--teal); }
+.horizon-tag.short { border-color: var(--gold-dim); color: var(--gold); }
+
+/* ---------- Report page ---------- */
+
+.back-link {
+  display: block;
+  max-width: 980px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.75rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+.back-link:hover { color: var(--teal); }
+
+.report { max-width: 780px; margin: 0 auto; padding: 1.5rem 1.75rem 3rem; }
+
+.report-hero {
+  padding: 1.6rem 0 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.2rem;
+}
+
+.report-hero h1 {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0 0 0.8rem;
+  color: var(--text);
+}
+
+.hero-stats { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.hero-stat-value { font-family: var(--font-mono); font-size: 1.3rem; color: var(--teal); text-shadow: 0 0 18px var(--teal-dim); }
+.hero-stat-label { font-family: var(--font-display); font-size: 0.68rem; color: var(--text-faint); margin-top: 0.2rem; }
 
 .report-meta {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.55rem;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1.2rem 0;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 1.5rem;
 }
 
 .report-date {
-  font-family: "SF Mono", "Menlo", monospace;
-  font-size: 0.8rem;
-  color: var(--text-dim);
+  font-size: 0.78rem;
+  color: var(--text-faint);
   margin-left: auto;
 }
 
+/* Section panels: thin left-accent rule, not drop-shadow cards */
 .report h2 {
-  font-size: 1.2rem;
-  margin: 2rem 0 0.6rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.1rem 0 0.9rem;
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--teal);
 }
 
 .report h3 {
-  font-size: 1.02rem;
-  margin: 1.4rem 0 0.4rem;
-  color: var(--text-dim);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 1.3rem 0 0.5rem;
 }
 
-.report p { margin: 0.6rem 0; max-width: 72ch; }
+.report p { margin: 0.7rem 0; font-size: 1rem; color: var(--text); }
+.report ul { margin: 0.7rem 0; padding-left: 1.2rem; }
+.report li { margin: 0.35rem 0; }
 
-.report ul { margin: 0.6rem 0; padding-left: 1.3rem; }
-.report li { margin: 0.3rem 0; }
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.4rem;
+  font-size: 0.88rem;
+}
+.report-table th {
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  color: var(--text-faint);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  border-bottom: 1px solid var(--rule);
+}
+.report-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--rule-soft);
+  color: var(--text);
+}
+
+/* ---------- Footer ---------- */
 
 .site-footer {
-  max-width: 880px;
+  max-width: 980px;
   margin: 2rem auto 0;
-  padding: 1.2rem 1.5rem 2.5rem;
+  padding: 1.3rem 1.75rem 3rem;
   border-top: 1px solid var(--rule);
-  color: var(--text-dim);
-  font-size: 0.82rem;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+  font-family: var(--font-body);
 }
 
-@media (max-width: 600px) {
+/* ---------- Accessibility & responsiveness ---------- */
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-value { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+@media (max-width: 640px) {
   .index-table { font-size: 0.82rem; }
   .index-table th:nth-child(5), .index-table td:nth-child(5) { display: none; }
-  .index-table th:nth-child(6), .index-table td:nth-child(6) { display: none; }
+  .stats-strip { padding: 0 1.25rem; }
+  .stat-value { font-size: 1.6rem; }
+  .site-header, .report, main { padding-left: 1.25rem; padding-right: 1.25rem; }
 }
