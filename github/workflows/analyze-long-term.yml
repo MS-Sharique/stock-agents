@@ -1,0 +1,55 @@
+name: Analyze Stock (Long-term, 12mo+ hold)
+
+# Manually triggered from the Actions tab: click "Run workflow" and enter
+# a ticker or company name. This is deliberately manual (not on every push)
+# since each run makes real, billed API calls.
+on:
+  workflow_dispatch:
+    inputs:
+      stock:
+        description: "Ticker or company name to analyze (e.g. RELIANCE.NS, or a US ticker)"
+        required: true
+        type: string
+      target_return_pct:
+        description: "Target return % to sell at (once minimum hold is met)"
+        required: false
+        default: "50"
+        type: string
+      min_hold_months:
+        description: "Minimum months to hold before selling, even if the target is hit early"
+        required: false
+        default: "12"
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run analysis
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TARGET_RETURN_PCT: ${{ inputs.target_return_pct }}
+          MIN_HOLD_MONTHS: ${{ inputs.min_hold_months }}
+        run: python scripts/analyze_long_term.py "${{ inputs.stock }}"
+
+      - name: Commit and push report
+        run: |
+          git config user.name "stock-analysis-agent"
+          git config user.email "actions@github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "Long-term analysis: ${{ inputs.stock }}"
+          git push
