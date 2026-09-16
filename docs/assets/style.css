@@ -1,0 +1,149 @@
+:root {
+  --ink: #12181f;
+  --paper: #f7f5f0;
+  --paper-dim: #ece8df;
+  --rule: #d8d2c4;
+  --accent-pass: #2f6b4f;
+  --accent-fail: #a13d3d;
+  --accent-uncertain: #8a6d1f;
+  --text-dim: #5b5648;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  line-height: 1.55;
+}
+
+.site-header {
+  padding: 2.5rem 1.5rem 1.5rem;
+  max-width: 880px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header h1 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.subhead {
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  max-width: 62ch;
+  margin: 0;
+}
+
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin: 1.2rem 0 0 1.5rem;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.85rem;
+}
+.back-link:hover { color: var(--ink); }
+
+.index-table, .report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.index-table th, .index-table td,
+.report-table th, .report-table td {
+  text-align: left;
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.index-table th, .report-table th {
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.index-table a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+.index-table a:hover { border-bottom-color: var(--ink); }
+
+.badge {
+  display: inline-block;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  color: var(--paper);
+}
+.badge-pass { background: var(--accent-pass); }
+.badge-fail { background: var(--accent-fail); }
+.badge-uncertain { background: var(--accent-uncertain); }
+
+.report-meta {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+
+.report-date {
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+.report h2 {
+  font-size: 1.2rem;
+  margin: 2rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.report h3 {
+  font-size: 1.02rem;
+  margin: 1.4rem 0 0.4rem;
+  color: var(--text-dim);
+}
+
+.report p { margin: 0.6rem 0; max-width: 72ch; }
+
+.report ul { margin: 0.6rem 0; padding-left: 1.3rem; }
+.report li { margin: 0.3rem 0; }
+
+.site-footer {
+  max-width: 880px;
+  margin: 2rem auto 0;
+  padding: 1.2rem 1.5rem 2.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 600px) {
+  .index-table { font-size: 0.82rem; }
+  .index-table th:nth-child(5), .index-table td:nth-child(5) { display: none; }
+  .index-table th:nth-child(6), .index-table td:nth-child(6) { display: none; }
+}
