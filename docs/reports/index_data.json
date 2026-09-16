@@ -1,0 +1,25 @@
+[
+  {
+    "ticker": "RELIANCE.NS",
+    "company_name": "RELIANCE.NS",
+    "one_line_summary": "See full report.",
+    "date": "2026-09-16",
+    "horizon": "long",
+    "index_row": [
+      [
+        "Shariah: UNCERTAIN",
+        "uncertain"
+      ],
+      [
+        "Pattern unclear",
+        "uncertain"
+      ],
+      [
+        "Plausible, likely multi-year",
+        "uncertain"
+      ]
+    ],
+    "slug": "reliance-ns",
+    "horizon_subdir": "long"
+  }
+]
