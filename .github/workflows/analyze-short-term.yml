@@ -17,6 +17,21 @@ on:
         required: false
         default: "12"
         type: string
+      investment_amount:
+        description: "Example position size for the report's illustration (any currency amount)"
+        required: false
+        default: "5000"
+        type: string
+      risk_pct_per_trade:
+        description: "% of the investment amount to risk on this trade, for risk-adjusted position sizing"
+        required: false
+        default: "1.5"
+        type: string
+      force_rerun:
+        description: "Re-run even if a report for this ticker already exists from today"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -41,6 +56,9 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TARGET_RETURN_PCT: ${{ inputs.target_return_pct }}
           MAX_HOLD_MONTHS: ${{ inputs.max_hold_months }}
+          INVESTMENT_AMOUNT: ${{ inputs.investment_amount }}
+          RISK_PCT_PER_TRADE: ${{ inputs.risk_pct_per_trade }}
+          FORCE_RERUN: ${{ inputs.force_rerun }}
         run: python scripts/analyze_short_term.py "${{ inputs.stock }}"
 
       - name: Commit and push report
