@@ -71,5 +71,32 @@
     ],
     "slug": "tatapower",
     "horizon_subdir": "long"
+  },
+  {
+    "ticker": "STLTECH.NS",
+    "company_name": "STLTECH.NS",
+    "one_line_summary": "See full report.",
+    "date": "2026-09-17",
+    "horizon": "short",
+    "index_row": [
+      [
+        "Shariah: UNCERTAIN",
+        "uncertain"
+      ],
+      [
+        "Technicals partial",
+        "uncertain"
+      ],
+      [
+        "Pattern unclear",
+        "uncertain"
+      ],
+      [
+        "Target uncertain",
+        "uncertain"
+      ]
+    ],
+    "slug": "stltech-ns",
+    "horizon_subdir": "short"
   }
 ]
